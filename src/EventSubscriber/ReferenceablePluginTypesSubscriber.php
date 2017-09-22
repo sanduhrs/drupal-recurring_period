@@ -4,7 +4,6 @@ namespace Drupal\recurring_period\EventSubscriber;
 
 use Drupal\commerce\Event\ReferenceablePluginTypesEvent;
 use Drupal\commerce\Event\CommerceEvents;
-use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -21,7 +20,7 @@ class ReferenceablePluginTypesSubscriber implements EventSubscriberInterface {
   /**
    * {@inheritdoc}
    */
-  static function getSubscribedEvents() {
+  public static function getSubscribedEvents() {
     // Too early to check for commerce module with the module handler service.
     // Can't check for whether the CommerceEvents::REFERENCEABLE_PLUGIN_TYPES
     // constant is defined.
