@@ -8,12 +8,12 @@ use Drupal\Core\Form\FormStateInterface;
  * Provides a period based on a rolling interval from the start date.
  *
  * @RecurringPeriod(
- *   id = "interval",
- *   label = @Translation("Interval"),
+ *   id = "rolling_interval",
+ *   label = @Translation("Rolling interval"),
  *   description = @Translation("Provide a period based on a rolling interval"),
  * )
  */
-class Interval extends RecurringPeriodBase {
+class RollingInterval extends RecurringPeriodBase {
 
   /**
    * {@inheritdoc}
