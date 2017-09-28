@@ -31,7 +31,7 @@ class Unlimited extends RecurringPeriodBase {
    * {@inheritdoc}
    */
   public function calculateDate($start) {
-    return 0;
+    return self::UNLIMITED;
   }
 
 }

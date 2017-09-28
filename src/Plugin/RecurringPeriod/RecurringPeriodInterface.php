@@ -11,6 +11,13 @@ use Drupal\Core\Plugin\PluginFormInterface;
 interface RecurringPeriodInterface extends ConfigurablePluginInterface, PluginFormInterface {
 
   /**
+   * Represents an unlimited end time.
+   *
+   * @var integer
+   */
+  const UNLIMITED = 0;
+
+  /**
    * Gets the plugin label.
    *
    * @return string
