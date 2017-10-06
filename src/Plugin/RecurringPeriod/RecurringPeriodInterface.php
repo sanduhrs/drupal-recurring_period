@@ -34,14 +34,14 @@ interface RecurringPeriodInterface extends ConfigurablePluginInterface, PluginFo
   public function getDescription();
 
   /**
-   * Calculate the end timestamp for the period.
+   * Calculate the end date and time for the period.
    *
-   * @param int $start
-   *   The timestamp to begin the period from.
+   * @param \DateTimeImmutable $start
+   *   The date and time to begin the period from.
    *
-   * @return int
-   *   The expiry timestamp.
+   * @return \DateTimeImmutable|int
+   *   The expiry date and time, or RecurringPeriodInterface::UNLIMITED.
    */
-  public function calculateDate($start);
+  public function calculateDate(\DateTimeImmutable $start);
 
 }

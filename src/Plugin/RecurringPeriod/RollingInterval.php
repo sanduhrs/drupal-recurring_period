@@ -58,7 +58,7 @@ class RollingInterval extends RecurringPeriodBase {
   /**
    * {@inheritdoc}
    */
-  public function calculateDate($start) {
+  public function calculateDate(\DateTimeImmutable $start) {
     // Get our interval values from our configuration.
     $config = $this->getConfiguration();
     $interval_configuration = $config['interval'];
@@ -70,13 +70,7 @@ class RollingInterval extends RecurringPeriodBase {
     $interval_plugin_definition = \Drupal::service('plugin.manager.interval.intervals')->getDefinition($interval_plugin_id);
     $value = $interval_configuration['interval'] * $interval_plugin_definition['multiplier'];
     $date_interval = \DateInterval::createFromDateString($value . ' ' . $interval_plugin_definition['php']);
-
-    // Apply the interval to the start date.
-    // All date calculations are done in UTC.
-    $start_date_time = new \DateTime('@' . $start);
-    $end_date_time = $start_date_time->add($date_interval);
-
-    return $end_date_time->getTimestamp();
+    return $start->add($date_interval);
   }
 
 }
