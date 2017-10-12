@@ -6,6 +6,8 @@ use Drupal\recurring_period\Plugin\RecurringPeriod\RecurringPeriodInterface;
 
 /**
  * Tests the fixed interval plugin.
+ *
+ * @group recurring_period
  */
 class FixedReferenceDateIntervalTest extends RecurringPeriodTestBase {
 

@@ -7,6 +7,8 @@ use Drupal\recurring_period\RecurringPeriodManager;
 
 /**
  * Base class for kernel tests.
+ *
+ * @group recurring_period
  */
 abstract class RecurringPeriodTestBase extends KernelTestBase {
 

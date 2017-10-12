@@ -6,6 +6,8 @@ use Drupal\recurring_period\Plugin\RecurringPeriod\RecurringPeriodInterface;
 
 /**
  * Tests the rolling interval plugin.
+ *
+ * @group recurring_period
  */
 class RollingIntervalTest extends RecurringPeriodTestBase {
 
