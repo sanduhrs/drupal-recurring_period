@@ -1,6 +1,6 @@
-name: 'Recurring Time Period'
+name: Recurring Time Period
 type: module
-description: 'Provides a configurable plugin for defining recurring time periods.'
+description: Provides a configurable plugin for defining recurring time periods.
 core: 8.x
 dependencies:
-  - interval
+  - interval:interval
