@@ -34,16 +34,24 @@ class Period {
   protected $endDate;
 
   /**
+   * The optional label for the period.
+   */
+  protected $label = '';
+
+  /**
    * Constructs a new Period object.
    *
    * @param \Drupal\Core\Datetime\DrupalDateTime $start_date
    *   The start date/time.
    * @param \Drupal\Core\Datetime\DrupalDateTime $end_date
    *   The end date/time.
+   * @param string|null $label
+   *   (optional) The label.
    */
-  public function __construct(DrupalDateTime $start_date, DrupalDateTime $end_date) {
+  public function __construct(DrupalDateTime $start_date, DrupalDateTime $end_date, $label = '') {
     $this->startDate = $start_date;
     $this->endDate = $end_date;
+    $this->label = $label;
   }
 
   /**
@@ -64,6 +72,16 @@ class Period {
    */
   public function getEndDate() {
     return $this->endDate;
+  }
+
+  /**
+   * Gets the label.
+   *
+   * @return string
+   *   The label.
+   */
+  public function getLabel() {
+    return $this->label;
   }
 
   /**
