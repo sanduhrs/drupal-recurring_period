@@ -2,6 +2,7 @@
 
 namespace Drupal\recurring_period\Plugin\RecurringPeriod;
 
+use Drupal\recurring_period\Datetime\Period;
 use Drupal\Component\Plugin\PluginBase;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Form\FormStateInterface;
@@ -86,6 +87,24 @@ abstract class RecurringPeriodBase extends PluginBase implements RecurringPeriod
    */
   public function calculateDependencies() {
     return [];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getPeriod(\DateTimeImmutable $start) {
+    $end_date = $this->calculateDate($start);
+
+    return new Period($start, $end_date);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getNextPeriod(Period $period) {
+    $end_date = $period->getEndDate();
+
+    return $this->getPeriod($end_date);
   }
 
 }
