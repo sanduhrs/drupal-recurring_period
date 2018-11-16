@@ -2,8 +2,6 @@
 
 namespace Drupal\recurring_period\Datetime;
 
-use Drupal\Core\Datetime\DrupalDateTime;
-
 /**
  * Represents a period of time with specific start and end dates.
  *
@@ -22,14 +20,14 @@ class Period {
   /**
    * The start date/time.
    *
-   * @var \Drupal\Core\Datetime\DrupalDateTime
+   * @var \DateTimeImmutable
    */
   protected $startDate;
 
   /**
    * The end date/time.
    *
-   * @var \Drupal\Core\Datetime\DrupalDateTime
+   * @var \DateTimeImmutable
    */
   protected $endDate;
 
@@ -41,14 +39,14 @@ class Period {
   /**
    * Constructs a new Period object.
    *
-   * @param \Drupal\Core\Datetime\DrupalDateTime $start_date
+   * @param \DateTimeImmutable $start_date
    *   The start date/time.
-   * @param \Drupal\Core\Datetime\DrupalDateTime $end_date
+   * @param \DateTimeImmutable $end_date
    *   The end date/time.
    * @param string|null $label
    *   (optional) The label.
    */
-  public function __construct(DrupalDateTime $start_date, DrupalDateTime $end_date, $label = '') {
+  public function __construct(\DateTimeImmutable $start_date, \DateTimeImmutable $end_date, $label = '') {
     $this->startDate = $start_date;
     $this->endDate = $end_date;
     $this->label = $label;
@@ -57,7 +55,7 @@ class Period {
   /**
    * Gets the start date/time.
    *
-   * @return \Drupal\Core\Datetime\DrupalDateTime
+   * @return \DateTimeImmutable
    *   The start date/time.
    */
   public function getStartDate() {
@@ -67,7 +65,7 @@ class Period {
   /**
    * Gets the end date/time.
    *
-   * @return \Drupal\Core\Datetime\DrupalDateTime
+   * @return \DateTimeImmutable
    *   The end date/time.
    */
   public function getEndDate() {
@@ -97,13 +95,13 @@ class Period {
   /**
    * Checks whether the given date/time is contained in the period.
    *
-   * @param \Drupal\Core\Datetime\DrupalDateTime $date
+   * @param \\DateTimeImmutable $date
    *   The date/time.
    *
    * @return bool
    *   TRUE if the date/time is contained in the period, FALSE otherwise.
    */
-  public function contains(DrupalDateTime $date) {
+  public function contains(\DateTimeImmutable $date) {
     // Unlike DateTime, DrupalDateTime objects can't be compared directly.
     $timestamp = $date->format('U');
     $starts = $this->startDate->format('U');
