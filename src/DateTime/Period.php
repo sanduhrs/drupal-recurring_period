@@ -2,6 +2,8 @@
 
 namespace Drupal\recurring_period\Datetime;
 
+use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
+
 /**
  * Represents a period of time with specific start and end dates.
  *
@@ -50,6 +52,49 @@ class Period {
     $this->startDate = $start_date;
     $this->endDate = $end_date;
     $this->label = $label;
+  }
+
+  /**
+   * Creates an entity from this period.
+   *
+   * This requires the entity class for the specified entity type to use
+   * \Drupal\recurring_period\Entity\PeriodEntityTrait, or have compatible
+   * entity keys.
+   *
+   * @param string $entity_type_id
+   *   The entity type ID of the entity to create.
+   * @param array $values
+   *   An array of initial values for the new entity. If this contains a value
+   *   for the label field, it will be taken over any label from the Period
+   *   object.
+   *
+   * @return \Drupal\Core\Entity\Entity
+   *   The unsaved entity.
+   */
+  public function toEntity($entity_type_id, $values = []) {
+    $entity_type = \Drupal::entityTypeManager()->getDefinition($entity_type_id);
+    if ($entity_type->hasKey('date_range')) {
+      $values += [
+        $entity_type->getKey('date_range') => [
+          'value' => $this->getStartDate()->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT),
+          'end_value' => $this->getEndDate()->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT),
+        ],
+      ];
+    }
+    else {
+      $values += [
+        $entity_type->getKey('start_date') => $this->getStartDate()->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT),
+        $entity_type->getKey('end_date') => $this->getEndDate()->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT),
+      ];
+    }
+
+    if ($entity_type->hasKey('label')) {
+      $values += [
+        $entity_type->getKey('label') => $this->getLabel(),
+      ];
+    }
+
+    return \Drupal::entityTypeManager()->getStorage($entity_type_id)->create($values);
   }
 
   /**
