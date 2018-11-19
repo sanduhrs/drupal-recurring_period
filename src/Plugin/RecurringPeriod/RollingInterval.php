@@ -67,7 +67,7 @@ class RollingInterval extends RecurringPeriodBase {
 
     // Create a DateInterval that represents the interval.
     // TODO: This can be removed when https://www.drupal.org/node/2900435 lands.
-    $interval_plugin_definition = \Drupal::service('plugin.manager.interval.intervals')->getDefinition($interval_plugin_id);
+    $interval_plugin_definition = $this->pluginManagerIntervals->getDefinition($interval_plugin_id);
     $value = $interval_configuration['interval'] * $interval_plugin_definition['multiplier'];
     $date_interval = \DateInterval::createFromDateString($value . ' ' . $interval_plugin_definition['php']);
     return $start->add($date_interval);

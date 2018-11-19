@@ -6,11 +6,21 @@ use Drupal\recurring_period\Datetime\Period;
 use Drupal\Component\Plugin\PluginBase;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\interval\IntervalPluginManagerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Base class for recurring period plugins.
  */
-abstract class RecurringPeriodBase extends PluginBase implements RecurringPeriodInterface {
+abstract class RecurringPeriodBase extends PluginBase implements ContainerFactoryPluginInterface, RecurringPeriodInterface {
+
+  /**
+   * The Interval Plugin Manager service.
+   *
+   * @var \Drupal\interval\IntervalPluginManagerInterface
+   */
+  protected $pluginManagerIntervals;
 
   /**
    * Constructs a new plugin instance.
@@ -21,11 +31,29 @@ abstract class RecurringPeriodBase extends PluginBase implements RecurringPeriod
    *   The pluginId for the plugin instance.
    * @param mixed $plugin_definition
    *   The plugin implementation definition.
+   * @param \Drupal\interval\IntervalPluginManagerInterface $plugin_manager_interval_intervals
+   *   The Interval Plugin Manager service.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition) {
+  public function __construct(
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+    IntervalPluginManagerInterface $plugin_manager_interval_intervals
+  ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
+    $this->pluginManagerIntervals = $plugin_manager_interval_intervals;
+  }
 
-    $this->setConfiguration($configuration);
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    return new static(
+      $configuration,
+      $plugin_id,
+      $plugin_definition,
+      $container->get('plugin.manager.interval.intervals')
+    );
   }
 
   /**
