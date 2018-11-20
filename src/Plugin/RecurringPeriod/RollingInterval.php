@@ -73,4 +73,24 @@ class RollingInterval extends RecurringPeriodBase {
     return $start->add($date_interval);
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function getPeriodLabel(\DateTimeImmutable $start, \DateTimeImmutable $end) {
+    // Get our interval values from our configuration.
+    $config = $this->getConfiguration();
+    $interval_configuration = $config['interval'];
+    // The interval plugin ID is the 'period' value.
+    $interval_plugin_id = $interval_configuration['period'];
+    $interval_plugin_definition = $this->pluginManagerIntervals->getDefinition($interval_plugin_id);
+
+    return $this->t("@count @interval from @start-date", [
+      '@count' => $config['interval']['interval'],
+      '@interval' => ($config['interval']['interval'] == 1)
+        ? $interval_plugin_definition['singular']
+        : $interval_plugin_definition['plural'],
+      '@start-date' => $start->format(\DateTimeInterface::RSS),
+    ]);
+  }
+
 }
