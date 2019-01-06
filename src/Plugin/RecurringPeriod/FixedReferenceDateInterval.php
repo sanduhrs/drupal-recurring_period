@@ -80,7 +80,19 @@ class FixedReferenceDateInterval extends RecurringPeriodBase {
    */
   public function calculateDate(\DateTimeImmutable $start) {
     $config = $this->getConfiguration();
+    $date_interval = $this->getDateInterval();
 
+    return $this->findNextAppropriateDate($start, $config['reference_date'], $date_interval);
+  }
+
+  /**
+   * Gets a \DateInterval object for the plugin's configuration.
+   *
+   * @return \DateInterval
+   *   The date interval object.
+   */
+  protected function getDateInterval() {
+    $config = $this->getConfiguration();
     $interval_configuration = $config['interval'];
     // The interval plugin ID is the 'period' value.
     $interval_plugin_id = $interval_configuration['period'];
@@ -91,7 +103,7 @@ class FixedReferenceDateInterval extends RecurringPeriodBase {
     $value = $interval_configuration['interval'] * $interval_plugin_definition['multiplier'];
     $date_interval = \DateInterval::createFromDateString($value . ' ' . $interval_plugin_definition['php']);
 
-    return $this->findNextAppropriateDate($start, $config['reference_date'], $date_interval);
+    return $date_interval;
   }
 
   /**
