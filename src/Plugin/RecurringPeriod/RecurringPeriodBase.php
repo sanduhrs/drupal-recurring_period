@@ -7,6 +7,7 @@ use Drupal\Component\Plugin\PluginBase;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\interval\IntervalPluginManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -14,6 +15,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * Base class for recurring period plugins.
  */
 abstract class RecurringPeriodBase extends PluginBase implements ContainerFactoryPluginInterface, RecurringPeriodInterface {
+
+  use StringTranslationTrait;
 
   /**
    * The Interval Plugin Manager service.
@@ -120,10 +123,18 @@ abstract class RecurringPeriodBase extends PluginBase implements ContainerFactor
   /**
    * {@inheritdoc}
    */
+  public function getPeriodLabel(\DateTimeImmutable $start, \DateTimeImmutable $end) {
+    return '';
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getPeriod(\DateTimeImmutable $start) {
     $end_date = $this->calculateDate($start);
+    $label = $this->getPeriodLabel($start, $end_date);
 
-    return new Period($start, $end_date);
+    return new Period($start, $end_date, $label);
   }
 
   /**

@@ -46,6 +46,22 @@ interface RecurringPeriodInterface extends ConfigurablePluginInterface, PluginFo
   public function calculateDate(\DateTimeImmutable $start);
 
   /**
+   * Gets a label for the period starting from the given date.
+   *
+   * This produces a generic label. It may be desirable to override this
+   * method in a replacement plugin class.
+   *
+   * @param \DateTimeImmutable $start
+   *   The date and time to begin the period from.
+   * @param \DateTimeImmutable $end
+   *   The date and time on which the period ends.
+   *
+   * @return \Drupal\Core\StringTranslation\TranslatableMarkup
+   *   The label.
+   */
+  public function getPeriodLabel(\DateTimeImmutable $start, \DateTimeImmutable $end);
+
+  /**
    * Gets a period object that begins on a given date.
    *
    * @param \DateTimeImmutable $start
