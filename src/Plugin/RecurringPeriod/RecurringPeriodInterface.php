@@ -64,17 +64,6 @@ interface RecurringPeriodInterface extends ConfigurablePluginInterface, PluginFo
   public function getDescription();
 
   /**
-   * Calculate the end date and time for the period.
-   *
-   * @param \DateTimeImmutable $start
-   *   The date and time to begin the period from.
-   *
-   * @return \DateTimeImmutable|int
-   *   The expiry date and time, or RecurringPeriodInterface::UNLIMITED.
-   */
-  public function calculateDate(\DateTimeImmutable $start);
-
-  /**
    * Calculates the end of the previous period.
    *
    * @param \DateTimeImmutable $date
@@ -84,6 +73,25 @@ interface RecurringPeriodInterface extends ConfigurablePluginInterface, PluginFo
    *   The expiry date and time, or RecurringPeriodInterface::UNLIMITED.
    */
   public function calculateStart(\DateTimeImmutable $date);
+
+  /**
+   * Calculates the end date and time for the period.
+   *
+   * @param \DateTimeImmutable $start
+   *   The date and time to begin the period from.
+   *
+   * @return \DateTimeImmutable|int
+   *   The expiry date and time, or RecurringPeriodInterface::UNLIMITED.
+   */
+  public function calculateEnd(\DateTimeImmutable $start);
+
+  /**
+   * Calculates the end date and time for the period.
+   *
+   * @deprecated
+   *   Use calculateEnd() instead.
+   */
+  public function calculateDate(\DateTimeImmutable $start);
 
   /**
    * Gets a label for the period starting from the given date.

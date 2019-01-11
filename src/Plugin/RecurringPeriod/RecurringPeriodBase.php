@@ -123,6 +123,15 @@ abstract class RecurringPeriodBase extends PluginBase implements ContainerFactor
   /**
    * {@inheritdoc}
    */
+  public function calculateEnd(\DateTimeImmutable $start) {
+    // Call the deprecated method in the plugin class.
+    // TODO: reverse this, so we implement the deprecated method.
+    return $this->calculateDate($start);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getPeriodLabel(\DateTimeImmutable $start, \DateTimeImmutable $end) {
     return '';
   }
