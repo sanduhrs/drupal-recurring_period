@@ -16,7 +16,7 @@ class FixedReferenceDateIntervalTest extends RecurringPeriodTestBase {
    *
    * @dataProvider testFixedIntervalPluginProvider
    */
-  public function testFixedIntervalPlugin($timezone_name, $reference_date, $interval, $start_date, $expected) {
+  public function testFixedIntervalPlugin($timezone_name, $reference_date, $interval, $start_date, $expected_next, $expected_start) {
     $timezone = new \DateTimeZone($timezone_name);
 
     /** @var RecurringPeriodInterface $plugin */
@@ -26,9 +26,12 @@ class FixedReferenceDateIntervalTest extends RecurringPeriodTestBase {
     ]);
 
     $start_date = new \DateTimeImmutable($start_date, $timezone);
-    $expected_end_date = new \DateTimeImmutable($expected, $timezone);
+    $expected_end_date = new \DateTimeImmutable($expected_next, $timezone);
 
     $this->assertEquals($expected_end_date, $plugin->calculateDate($start_date));
+
+    $expected_start_date = new \DateTimeImmutable($expected_start, $timezone);
+    $this->assertEquals($expected_start_date, $plugin->calculateStart($start_date));
   }
 
   /**
@@ -50,6 +53,8 @@ class FixedReferenceDateIntervalTest extends RecurringPeriodTestBase {
         '2017-07-01T00:00:00',
         // Expected end date.
         '2017-12-25T00:00:00',
+        // Expected period start date.
+        '2016-12-25T00:00:00',
       ],
       'annual recurring, due next year' => [
         'Europe/London',
@@ -60,6 +65,7 @@ class FixedReferenceDateIntervalTest extends RecurringPeriodTestBase {
         ],
         '2017-07-01T00:00:00',
         '2018-01-01T00:00:00',
+        '2017-01-01T00:00:00',
       ],
       'annual recurring, entire year left' => [
         'Europe/London',
@@ -70,6 +76,7 @@ class FixedReferenceDateIntervalTest extends RecurringPeriodTestBase {
         ],
         '2017-01-01T00:00:00',
         '2018-01-01T00:00:00',
+        '2017-01-01T00:00:00',
       ],
     ];
   }

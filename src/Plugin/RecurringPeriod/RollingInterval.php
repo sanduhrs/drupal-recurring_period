@@ -76,6 +76,14 @@ class RollingInterval extends RecurringPeriodBase {
   /**
    * {@inheritdoc}
    */
+  public function calculateStart(\DateTimeImmutable $date) {
+    // For a rolling interval, the start date is the same as the given date.
+    return $date;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getPeriodLabel(\DateTimeImmutable $start, \DateTimeImmutable $end) {
     // Get our interval values from our configuration.
     $config = $this->getConfiguration();

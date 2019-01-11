@@ -86,6 +86,36 @@ class FixedReferenceDateInterval extends RecurringPeriodBase {
   }
 
   /**
+   * {@inheritdoc}
+   */
+  public function calculateStart(\DateTimeImmutable $date) {
+    $config = $this->getConfiguration();
+    $interval = $this->getDateInterval();
+
+    $reference_date = new \DateTimeImmutable($config['reference_date'], $date->getTimezone());
+    $start_date = $reference_date;
+
+    $is_reference_date_in_future = $start_date->diff($date)->invert;
+    if ($is_reference_date_in_future) {
+      // The reference date is in the future, so rewind it until it precedes
+      // the start date.
+      while ($start_date->diff($date)->invert == TRUE) {
+        $start_date = $start_date->sub($interval);
+      }
+    }
+    else {
+      // The reference date is in the past, so fast forward it until the next
+      // increment beyond the start date, then subtract one interval.
+      while ($start_date->diff($date)->invert == FALSE) {
+        $start_date = $start_date->add($interval);
+      }
+      $start_date = $start_date->sub($interval);
+    }
+
+    return $start_date;
+  }
+
+  /**
    * Gets a \DateInterval object for the plugin's configuration.
    *
    * @return \DateInterval

@@ -23,7 +23,7 @@ class RollingIntervalTest extends RecurringPeriodTestBase {
 
     $start_date_time = new \DateTimeImmutable($start_date, $timezone_london);
 
-    $period = $rolling_interval_plugin->getPeriod($start_date_time);
+    $period = $rolling_interval_plugin->getPeriodFromDate($start_date_time);
 
     $first_period_dates = array_shift($period_dates);
     $this->assertEquals($first_period_dates[0], $period->getStartDate()->format(\DateTimeInterface::ATOM));

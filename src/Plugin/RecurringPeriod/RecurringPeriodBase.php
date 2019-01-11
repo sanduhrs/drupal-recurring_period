@@ -130,7 +130,7 @@ abstract class RecurringPeriodBase extends PluginBase implements ContainerFactor
   /**
    * {@inheritdoc}
    */
-  public function getPeriod(\DateTimeImmutable $start) {
+  public function getPeriodFromDate(\DateTimeImmutable $start) {
     $end_date = $this->calculateDate($start);
     $label = $this->getPeriodLabel($start, $end_date);
 
@@ -140,10 +140,22 @@ abstract class RecurringPeriodBase extends PluginBase implements ContainerFactor
   /**
    * {@inheritdoc}
    */
+  public function getPeriodContainingDate(\DateTimeImmutable $date) {
+    $start_date = $this->calculateStart($date);
+    $end_date = $this->calculateDate($date);
+
+    $label = $this->getPeriodLabel($start_date, $end_date);
+
+    return new Period($start_date, $end_date, $label);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getNextPeriod(Period $period) {
     $end_date = $period->getEndDate();
 
-    return $this->getPeriod($end_date);
+    return $this->getPeriodFromDate($end_date);
   }
 
 }
