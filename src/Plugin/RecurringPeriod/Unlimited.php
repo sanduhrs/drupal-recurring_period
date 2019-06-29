@@ -41,4 +41,11 @@ class Unlimited extends RecurringPeriodBase {
     return self::UNLIMITED;
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function calculateEnd(\DateTimeImmutable $start) {
+    return self::UNLIMITED;
+  }
+
 }

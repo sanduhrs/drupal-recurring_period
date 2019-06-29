@@ -79,10 +79,7 @@ class FixedReferenceDateInterval extends RecurringPeriodBase {
    * {@inheritdoc}
    */
   public function calculateDate(\DateTimeImmutable $start) {
-    $config = $this->getConfiguration();
-    $date_interval = $this->getDateInterval();
-
-    return $this->findNextAppropriateDate($start, $config['reference_date'], $date_interval);
+    return $this->calculateEnd($start);
   }
 
   /**
@@ -113,6 +110,16 @@ class FixedReferenceDateInterval extends RecurringPeriodBase {
     }
 
     return $start_date;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function calculateEnd(\DateTimeImmutable $start) {
+    $config = $this->getConfiguration();
+    $date_interval = $this->getDateInterval();
+
+    return $this->findNextAppropriateDate($start, $config['reference_date'], $date_interval);
   }
 
   /**

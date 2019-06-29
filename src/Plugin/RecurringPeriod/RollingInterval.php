@@ -59,6 +59,21 @@ class RollingInterval extends RecurringPeriodBase {
    * {@inheritdoc}
    */
   public function calculateDate(\DateTimeImmutable $start) {
+    return $this->calculateEnd($start);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function calculateStart(\DateTimeImmutable $date) {
+    // For a rolling interval, the start date is the same as the given date.
+    return $date;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function calculateEnd(\DateTimeImmutable $start) {
     // Get our interval values from our configuration.
     $config = $this->getConfiguration();
     $interval_configuration = $config['interval'];
@@ -71,14 +86,6 @@ class RollingInterval extends RecurringPeriodBase {
     $value = $interval_configuration['interval'] * $interval_plugin_definition['multiplier'];
     $date_interval = \DateInterval::createFromDateString($value . ' ' . $interval_plugin_definition['php']);
     return $start->add($date_interval);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function calculateStart(\DateTimeImmutable $date) {
-    // For a rolling interval, the start date is the same as the given date.
-    return $date;
   }
 
   /**
