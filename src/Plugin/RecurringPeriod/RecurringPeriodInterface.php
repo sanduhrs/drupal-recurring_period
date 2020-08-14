@@ -3,7 +3,8 @@
 namespace Drupal\recurring_period\Plugin\RecurringPeriod;
 
 use Drupal\recurring_period\Datetime\Period;
-use Drupal\Component\Plugin\ConfigurablePluginInterface;
+use Drupal\Component\Plugin\ConfigurableInterface;
+use Drupal\Component\Plugin\DependentPluginInterface;
 use Drupal\Core\Plugin\PluginFormInterface;
 
 /**
@@ -38,7 +39,7 @@ use Drupal\Core\Plugin\PluginFormInterface;
  * Furthermore, a Period object can be converted to an entity: see the Period
  * class for details.
  */
-interface RecurringPeriodInterface extends ConfigurablePluginInterface, PluginFormInterface {
+interface RecurringPeriodInterface extends ConfigurableInterface, DependentPluginInterface, PluginFormInterface {
 
   /**
    * Represents an unlimited end time.
